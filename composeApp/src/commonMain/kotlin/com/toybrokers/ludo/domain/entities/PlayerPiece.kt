@@ -1,4 +1,4 @@
-package com.toybrokers.ludo.entities
+package com.toybrokers.ludo.domain.entities
 
 sealed class PlayerPiece(val owner: Player) {
     data class First(val pieceOwner: Player) : PlayerPiece(pieceOwner)

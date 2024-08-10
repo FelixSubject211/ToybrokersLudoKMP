@@ -1,4 +1,4 @@
-package com.toybrokers.ludo.view.gameBoardViews
+package com.toybrokers.ludo.presentation.views.gameBoardViews
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

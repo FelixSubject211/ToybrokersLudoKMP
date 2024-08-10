@@ -1,4 +1,4 @@
-package com.toybrokers.ludo.entities
+package com.toybrokers.ludo.domain.entities
 
 sealed class GameEvent {
     data class PieceMoved(val piece: PlayerPiece) : GameEvent()

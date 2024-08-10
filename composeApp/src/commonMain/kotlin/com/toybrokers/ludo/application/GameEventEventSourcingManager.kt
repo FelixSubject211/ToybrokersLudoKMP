@@ -1,8 +1,9 @@
-package com.toybrokers.ludo.controllers
+package com.toybrokers.ludo.application
 
-import com.toybrokers.ludo.entities.GameEvent
-import com.toybrokers.ludo.entities.GameState
-import com.toybrokers.ludo.entities.Player
+import com.toybrokers.ludo.domain.interfaces.GameEventManager
+import com.toybrokers.ludo.domain.entities.GameEvent
+import com.toybrokers.ludo.domain.entities.GameState
+import com.toybrokers.ludo.domain.entities.Player
 
 class GameEventEventSourcingManager: GameEventManager {
     private val eventStack: MutableList<GameEvent> = mutableListOf()

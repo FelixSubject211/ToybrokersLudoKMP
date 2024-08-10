@@ -1,4 +1,4 @@
-package com.toybrokers.ludo.entities
+package com.toybrokers.ludo.domain.entities
 
 sealed class Position {
     data class Home(val playerPiece: PlayerPiece) : Position()

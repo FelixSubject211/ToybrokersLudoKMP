@@ -1,24 +1,36 @@
-package com.toybrokers.ludo.view.gameBoardViews
+package com.toybrokers.ludo.presentation.views.gameBoardViews
 
-import com.toybrokers.ludo.entities.GameState
-import com.toybrokers.ludo.entities.Player
-import com.toybrokers.ludo.entities.PlayerPiece
-import com.toybrokers.ludo.entities.Position
+import com.toybrokers.ludo.domain.entities.GameState
+import com.toybrokers.ludo.domain.entities.Player
+import com.toybrokers.ludo.domain.entities.PlayerPiece
+import com.toybrokers.ludo.domain.entities.Position
 
 fun generateBoard(gameState: GameState): List<List<GridItem>>{
     return listOf(
         listOf(
-            GridItem.Home(Player.Red, gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Red)))),
+            GridItem.Home(
+                Player.Red,
+                gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Red)))
+            ),
             GridItem.Empty,
-            GridItem.Home(Player.Red, gameState.playerPiece(Position.Home(PlayerPiece.Second(Player.Red)))),
+            GridItem.Home(
+                Player.Red,
+                gameState.playerPiece(Position.Home(PlayerPiece.Second(Player.Red)))
+            ),
             GridItem.Empty,
             GridItem.Track(gameState.playerPiece(Position.Track(8))),
             GridItem.Track(gameState.playerPiece(Position.Track(9))),
             GridItem.Track(gameState.playerPiece(Position.Track(10)), startOwner = Player.Blue),
             GridItem.Empty,
-            GridItem.Home(Player.Blue, gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Blue)))),
+            GridItem.Home(
+                Player.Blue,
+                gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Blue)))
+            ),
             GridItem.Empty,
-            GridItem.Home(Player.Blue, gameState.playerPiece(Position.Home(PlayerPiece.Second(Player.Blue)))),
+            GridItem.Home(
+                Player.Blue,
+                gameState.playerPiece(Position.Home(PlayerPiece.Second(Player.Blue)))
+            ),
         ),
         listOf(
             GridItem.Empty,
@@ -34,17 +46,29 @@ fun generateBoard(gameState: GameState): List<List<GridItem>>{
             GridItem.Empty,
         ),
         listOf(
-            GridItem.Home(Player.Red, gameState.playerPiece(Position.Home(PlayerPiece.Third(Player.Red)))),
+            GridItem.Home(
+                Player.Red,
+                gameState.playerPiece(Position.Home(PlayerPiece.Third(Player.Red)))
+            ),
             GridItem.Empty,
-            GridItem.Home(Player.Red, gameState.playerPiece(Position.Home(PlayerPiece.Fourth(Player.Red)))),
+            GridItem.Home(
+                Player.Red,
+                gameState.playerPiece(Position.Home(PlayerPiece.Fourth(Player.Red)))
+            ),
             GridItem.Empty,
             GridItem.Track(gameState.playerPiece(Position.Track(6))),
             GridItem.End(Player.Blue, gameState.playerPiece(Position.End(Player.Blue, 1))),
             GridItem.Track(gameState.playerPiece(Position.Track(12))),
             GridItem.Empty,
-            GridItem.Home(Player.Blue, gameState.playerPiece(Position.Home(PlayerPiece.Third(Player.Blue)))),
+            GridItem.Home(
+                Player.Blue,
+                gameState.playerPiece(Position.Home(PlayerPiece.Third(Player.Blue)))
+            ),
             GridItem.Empty,
-            GridItem.Home(Player.Blue, gameState.playerPiece(Position.Home(PlayerPiece.Fourth(Player.Blue)))),
+            GridItem.Home(
+                Player.Blue,
+                gameState.playerPiece(Position.Home(PlayerPiece.Fourth(Player.Blue)))
+            ),
         ),
         listOf(
             GridItem.Empty,
@@ -112,17 +136,44 @@ fun generateBoard(gameState: GameState): List<List<GridItem>>{
             GridItem.Empty,
         ),
         listOf(
-            GridItem.Home(Player.Yellow, gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Yellow)))),
+            GridItem.Home(
+                Player.Yellow, gameState.playerPiece(
+                    Position.Home(
+                        PlayerPiece.First(
+                            Player.Yellow
+                        )
+                    )
+                )
+            ),
             GridItem.Empty,
-            GridItem.Home(Player.Yellow, gameState.playerPiece(Position.Home(PlayerPiece.Second(Player.Yellow)))),
+            GridItem.Home(
+                Player.Yellow, gameState.playerPiece(
+                    Position.Home(
+                        PlayerPiece.Second(
+                            Player.Yellow
+                        )
+                    )
+                )
+            ),
             GridItem.Empty,
             GridItem.Track(gameState.playerPiece(Position.Track(32))),
             GridItem.End(Player.Yellow, gameState.playerPiece(Position.End(Player.Yellow, 1))),
             GridItem.Track(gameState.playerPiece(Position.Track(26))),
             GridItem.Empty,
-            GridItem.Home(Player.Green, gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Green)))),
+            GridItem.Home(
+                Player.Green,
+                gameState.playerPiece(Position.Home(PlayerPiece.First(Player.Green)))
+            ),
             GridItem.Empty,
-            GridItem.Home(Player.Green, gameState.playerPiece(Position.Home(PlayerPiece.Second(Player.Green)))),
+            GridItem.Home(
+                Player.Green, gameState.playerPiece(
+                    Position.Home(
+                        PlayerPiece.Second(
+                            Player.Green
+                        )
+                    )
+                )
+            ),
         ),
         listOf(
             GridItem.Empty,
@@ -142,25 +193,40 @@ fun generateBoard(gameState: GameState): List<List<GridItem>>{
                 Player.Yellow, gameState.playerPiece(
                     Position.Home(
                         PlayerPiece.Third(
-                            Player.Yellow)))),
+                            Player.Yellow
+                        )
+                    )
+                )
+            ),
             GridItem.Empty,
             GridItem.Home(
                 Player.Yellow, gameState.playerPiece(
                     Position.Home(
                         PlayerPiece.Fourth(
-                            Player.Yellow)))),
+                            Player.Yellow
+                        )
+                    )
+                )
+            ),
             GridItem.Empty,
             GridItem.Track(gameState.playerPiece(Position.Track(30)), startOwner = Player.Yellow),
             GridItem.Track(gameState.playerPiece(Position.Track(29))),
             GridItem.Track(gameState.playerPiece(Position.Track(28))),
             GridItem.Empty,
-            GridItem.Home(Player.Green, gameState.playerPiece(Position.Home(PlayerPiece.Third(Player.Green)))),
+            GridItem.Home(
+                Player.Green,
+                gameState.playerPiece(Position.Home(PlayerPiece.Third(Player.Green)))
+            ),
             GridItem.Empty,
             GridItem.Home(
                 Player.Green, gameState.playerPiece(
                     Position.Home(
                         PlayerPiece.Fourth(
-                            Player.Green)))),
+                            Player.Green
+                        )
+                    )
+                )
+            ),
         ),
     )
 }

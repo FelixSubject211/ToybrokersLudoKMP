@@ -1,4 +1,4 @@
-package com.toybrokers.ludo.entities
+package com.toybrokers.ludo.domain.events
 
 sealed class GameEventError {
     data object NotPlayersTurn : GameEventError()

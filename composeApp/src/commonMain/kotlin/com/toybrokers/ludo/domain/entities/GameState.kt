@@ -1,4 +1,6 @@
-package com.toybrokers.ludo.entities
+package com.toybrokers.ludo.domain.entities
+
+import com.toybrokers.ludo.domain.events.GameEventError
 
 data class GameState(
     val positions: Map<Position, PlayerPiece>,

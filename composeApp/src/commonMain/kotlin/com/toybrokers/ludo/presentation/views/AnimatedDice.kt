@@ -1,31 +1,18 @@
 package com.toybrokers.ludo.presentation.views
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.animateValue
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 
 @Composable
 fun AnimatedDice(
@@ -34,41 +21,17 @@ fun AnimatedDice(
     canRoll: Boolean,
     modifier: Modifier = Modifier
 ) {
-    var isRolling by remember { mutableStateOf(false) }
-    var currentNumber by remember { mutableStateOf(diceNumber) }
-    var targetNumber by remember { mutableStateOf(diceNumber) }
-
-    val transition = rememberInfiniteTransition()
-    val animatedNumber by transition.animateValue(
-        initialValue = 1,
-        targetValue = 6,
-        typeConverter = Int.VectorConverter,
-        animationSpec = infiniteRepeatable(
-            animation = tween(200, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        )
-    )
-
-    LaunchedEffect(isRolling) {
-        if (isRolling) {
-            delay(600)
-            isRolling = false
-            currentNumber = targetNumber
-            onRollCompleted(currentNumber)
-        }
-    }
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .size(64.dp)
             .background(Color.Red, RoundedCornerShape(8.dp))
-            .clickable(enabled = !isRolling && canRoll) {
-                targetNumber = (1..6).random()
-                isRolling = true
+            .clickable(enabled = canRoll) {
+                val newNumber = (1..6).random()
+                onRollCompleted(newNumber)
             }
     ) {
-        DrawDiceFace(if (isRolling) animatedNumber else currentNumber)
+        DrawDiceFace(diceNumber)
     }
 }
 

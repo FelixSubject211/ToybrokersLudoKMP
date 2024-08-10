@@ -96,7 +96,7 @@ data class GameState(
             .first { it in players }
     }
 
-    private fun possibleMoves(): List<PlayerPiece> {
+    fun possibleMoves(): List<PlayerPiece> {
         return positions
             .filter { it.value.owner == currentPlayer }
             .filter { hasValidTarget(position = it.key, playerPiece = it.value) }

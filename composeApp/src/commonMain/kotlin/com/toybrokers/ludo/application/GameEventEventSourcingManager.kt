@@ -4,22 +4,30 @@ import com.toybrokers.ludo.domain.interfaces.GameEventManager
 import com.toybrokers.ludo.domain.entities.GameEvent
 import com.toybrokers.ludo.domain.entities.GameState
 import com.toybrokers.ludo.domain.entities.Player
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-class GameEventEventSourcingManager: GameEventManager {
-    private val eventStack: MutableList<GameEvent> = mutableListOf()
-    private val initialState = GameState.initialState(Player.Green, Player.Yellow, Player.Red, Player.Blue)
-
-    override fun addEvent(event: GameEvent): GameState {
+class GameEventEventSourcingManager(
+    private val initialState: GameState,
+    private val eventStack: MutableList<GameEvent> = mutableListOf(),
+    private val _currentState: MutableStateFlow<GameState> = MutableStateFlow(initialState)
+): GameEventManager {
+    override fun addEvent(event: GameEvent) {
         eventStack.add(event)
-        return getCurrentState()
+        _currentState.tryEmit(getCurrentState())
     }
 
-    override fun undo(): GameState {
+    override fun undo() {
         eventStack.removeLastOrNull()
-        return getCurrentState()
+        _currentState.tryEmit(getCurrentState())
     }
 
-    override fun getCurrentState(): GameState {
+    override fun currentState(): StateFlow<GameState> {
+        return _currentState.asStateFlow()
+    }
+
+    private fun getCurrentState(): GameState {
         return eventStack.fold(initialState) { state, event ->
             state.apply(event)
         }

@@ -7,16 +7,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class GameViewModel(private val gameEventManager: GameEventManager) {
-    private val _gameState = MutableStateFlow(gameEventManager.getCurrentState())
-    val gameState: StateFlow<GameState> get() = _gameState
+    val gameState: StateFlow<GameState> get() = gameEventManager.currentState()
 
     fun addEvent(event: GameEvent) {
-        val newState = gameEventManager.addEvent(event)
-        _gameState.value = newState
+        gameEventManager.addEvent(event)
+
     }
 
     fun undo() {
-        val newState = gameEventManager.undo()
-        _gameState.value = newState
+        gameEventManager.undo()
     }
 }

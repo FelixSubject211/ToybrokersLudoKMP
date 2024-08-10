@@ -6,6 +6,33 @@ import kotlin.test.assertEquals
 class GameStateTest {
 
     @Test
+    fun shouldMovePieceToEndPositionWhenCrossingTrackEnd() {
+        val playerPiece = PlayerPiece.First(Player.Red)
+
+        val gameState = GameState(
+            positions = mapOf(
+                Position.Track(38) to playerPiece
+            ),
+            currentPlayer = Player.Red,
+            players = listOf(Player.Red),
+            turnStatus = TurnStatus.Move,
+            diceNumber = 3,
+            error = null
+        )
+
+        val actual = gameState.apply(GameEvent.PieceMoved(playerPiece))
+
+        val expected = gameState.copy(
+            positions = mapOf(
+                Position.End(Player.Red, value = 1) to playerPiece
+            ),
+            turnStatus = TurnStatus.Dice(remainingAttempts = 2),
+        )
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun shouldReturnErrorWhenMovingPieceFromHomeWhileDiceRollIs3() {
         val playerPiece1 = PlayerPiece.First(Player.Green)
         val playerPiece2 = PlayerPiece.Second(Player.Green)

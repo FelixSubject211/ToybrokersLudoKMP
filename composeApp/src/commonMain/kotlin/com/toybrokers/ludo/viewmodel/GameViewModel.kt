@@ -14,4 +14,9 @@ class GameViewModel(private val gameEventManager: GameEventManager) {
         val newState = gameEventManager.addEvent(event)
         _gameState.value = newState
     }
+
+    fun undo() {
+        val newState = gameEventManager.undo()
+        _gameState.value = newState
+    }
 }

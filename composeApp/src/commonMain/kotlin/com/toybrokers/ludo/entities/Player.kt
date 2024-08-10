@@ -23,4 +23,13 @@ sealed class Player {
             is Yellow -> Position.Track(30)
         }
     }
+
+    fun lastIndexBeforeEnd(): Int {
+        return when(this) {
+            Blue -> 9
+            Green -> 19
+            Yellow -> 29
+            Red -> 39
+        }
+    }
 }

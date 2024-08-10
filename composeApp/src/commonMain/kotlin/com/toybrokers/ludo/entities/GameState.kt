@@ -32,7 +32,8 @@ data class GameState(
 
         val newPosition = when (oldPosition) {
             is Position.Home -> event.piece.owner.start()
-            is Position.Track -> oldPosition.increment(diceNumber)
+            is Position.Track -> oldPosition.increment(diceNumber, event.piece.owner)
+            is Position.End -> oldPosition.increment(diceNumber)
         }
 
         val opponentPiece = positions[newPosition]
@@ -43,8 +44,10 @@ data class GameState(
                     put(Position.Home(it), it)
                     remove(newPosition)
                 }
-                put(newPosition, event.piece)
-                remove(oldPosition)
+                newPosition?.let {
+                    put(it, event.piece)
+                    remove(oldPosition)
+                }
             }
             .toMap()
 
@@ -104,7 +107,20 @@ data class GameState(
                 diceNumber == 6 && positions[playerPiece.owner.start()]?.owner != currentPlayer
             }
             is Position.Track -> {
-                positions[position.increment(diceNumber)]?.owner != currentPlayer
+                val incrementedPosition = position.increment(diceNumber, playerPiece.owner)
+                return if (incrementedPosition == null) {
+                    false
+                } else {
+                    positions[incrementedPosition]?.owner != currentPlayer
+                }
+            }
+            is Position.End -> {
+                val incrementedPosition = position.increment(diceNumber)
+                return if (incrementedPosition == null) {
+                    false
+                } else {
+                    positions[incrementedPosition] == null
+                }
             }
         }
     }

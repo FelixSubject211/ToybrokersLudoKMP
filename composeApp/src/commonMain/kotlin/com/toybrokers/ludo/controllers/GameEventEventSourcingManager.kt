@@ -13,6 +13,11 @@ class GameEventEventSourcingManager: GameEventManager {
         return getCurrentState()
     }
 
+    override fun undo(): GameState {
+        eventStack.removeLastOrNull()
+        return getCurrentState()
+    }
+
     override fun getCurrentState(): GameState {
         return eventStack.fold(initialState) { state, event ->
             state.apply(event)

@@ -9,9 +9,35 @@ sealed class Position {
             }
         }
 
-        fun increment(by: Int): Track {
-            val newValue = (value + by) % (maxIndex + 1)
-            return Track(newValue, maxIndex)
+        fun increment(by: Int, player: Player): Position? {
+            val newValue = (value + by)
+
+            if(player.lastIndexBeforeEnd() in value..<newValue) {
+                val offset = newValue - player.lastIndexBeforeEnd()
+                return if(offset <= 3) {
+                    End(player, offset - 1)
+                } else {
+                    null
+                }
+            } else {
+                return Track(newValue % (maxIndex + 1), maxIndex)
+            }
+        }
+    }
+    data class End(val player: Player, val value: Int, val maxIndex: Int = 3): Position() {
+        init {
+            require(value in 0..maxIndex) {
+                "End index must be between 0 and $maxIndex"
+            }
+        }
+
+        fun increment(by: Int): Position? {
+            val newValue = (value + by)
+            return if (newValue <= maxIndex) {
+                End(player, newValue)
+            } else {
+                null
+            }
         }
     }
 }

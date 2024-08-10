@@ -22,6 +22,10 @@ fun GameView(viewModel: GameViewModel) {
             Text("Dice")
         }
 
+        Button(onClick = viewModel::undo) {
+            Text("Undo")
+        }
+
         Text(gameState.value.error.toString())
 
         Text(gameState.value.currentPlayer.toString())

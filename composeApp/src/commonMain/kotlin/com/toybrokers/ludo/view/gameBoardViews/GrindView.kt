@@ -28,6 +28,7 @@ fun GridView(
                 GridItem.Empty -> GridItemEmptyView()
                 is GridItem.Home -> GridItemHomeView(gridItem, onPlayerPieceMove)
                 is GridItem.Track -> GridItemTrackView(gridItem, onPlayerPieceMove)
+                is GridItem.End -> GridItemEndView(gridItem, onPlayerPieceMove)
             }
         }
     }

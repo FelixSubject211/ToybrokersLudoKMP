@@ -5,5 +5,6 @@ import com.toybrokers.ludo.entities.GameState
 
 interface GameEventManager {
     fun addEvent(event: GameEvent): GameState
+    fun undo(): GameState
     fun getCurrentState(): GameState
 }

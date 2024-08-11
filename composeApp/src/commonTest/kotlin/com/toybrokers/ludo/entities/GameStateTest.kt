@@ -1,12 +1,12 @@
 package com.toybrokers.ludo.entities
 
-import com.toybrokers.ludo.domain.entities.GameEvent
-import com.toybrokers.ludo.domain.events.GameEventError
-import com.toybrokers.ludo.domain.entities.GameState
-import com.toybrokers.ludo.domain.entities.Player
-import com.toybrokers.ludo.domain.entities.PlayerPiece
-import com.toybrokers.ludo.domain.entities.Position
-import com.toybrokers.ludo.domain.entities.TurnStatus
+import com.toybrokers.ludo.core.domain.entities.GameEvent
+import com.toybrokers.ludo.core.domain.entities.GameState
+import com.toybrokers.ludo.core.domain.entities.Player
+import com.toybrokers.ludo.core.domain.entities.PlayerPiece
+import com.toybrokers.ludo.core.domain.entities.Position
+import com.toybrokers.ludo.core.domain.entities.TurnStatus
+import com.toybrokers.ludo.core.domain.events.GameEventError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -21,7 +21,7 @@ class GameStateTest {
                 Position.Track(38) to playerPiece
             ),
             currentPlayer = Player.Red,
-            players = listOf(Player.Red),
+            players = setOf(Player.Red),
             turnStatus = TurnStatus.Move,
             diceNumber = 3,
             error = null
@@ -50,7 +50,7 @@ class GameStateTest {
                 Position.Track(3) to playerPiece2
             ),
             currentPlayer = Player.Green,
-            players = listOf(Player.Green),
+            players = setOf(Player.Green),
             turnStatus = TurnStatus.Move,
             diceNumber = 3,
             error = null
@@ -76,7 +76,7 @@ class GameStateTest {
                 Position.Track(3) to opponentPiece
             ),
             currentPlayer = Player.Green,
-            players = listOf(Player.Green, Player.Red),
+            players = setOf(Player.Green, Player.Red),
             turnStatus = TurnStatus.Move,
             diceNumber = 3,
             error = null

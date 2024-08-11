@@ -1,8 +1,8 @@
 package com.toybrokers.ludo.features.game
 
 import com.toybrokers.ludo.Navigator
-import com.toybrokers.ludo.core.domain.entities.GameEvent
 import com.toybrokers.ludo.core.domain.entities.GameState
+import com.toybrokers.ludo.core.domain.events.GameEvent
 import com.toybrokers.ludo.core.domain.interfaces.TurnGatekeeper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

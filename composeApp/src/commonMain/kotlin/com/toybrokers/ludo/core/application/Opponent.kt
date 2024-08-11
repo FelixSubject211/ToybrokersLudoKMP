@@ -1,9 +1,9 @@
 package com.toybrokers.ludo.core.application
 
-import com.toybrokers.ludo.core.domain.entities.GameEvent
 import com.toybrokers.ludo.core.domain.entities.GameState
 import com.toybrokers.ludo.core.domain.entities.Player
 import com.toybrokers.ludo.core.domain.entities.TurnStatus
+import com.toybrokers.ludo.core.domain.events.GameEvent
 import com.toybrokers.ludo.core.domain.interfaces.GameEventManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,7 @@ class Opponent(
 
         if (gameState.turnStatus is TurnStatus.Dice) {
             gameEventManager.addEvent(
-                GameEvent.DiceRolled((1..6).random())
+                GameEvent.DiceRolled(gameState.dice.rolled())
             )
         } else {
             gameEventManager.addEvent(

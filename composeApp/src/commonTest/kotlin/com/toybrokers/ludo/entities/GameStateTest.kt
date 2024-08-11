@@ -1,12 +1,13 @@
 package com.toybrokers.ludo.entities
 
-import com.toybrokers.ludo.core.domain.entities.GameEvent
+import com.toybrokers.ludo.core.domain.entities.Dice
+import com.toybrokers.ludo.core.domain.entities.GameError
 import com.toybrokers.ludo.core.domain.entities.GameState
 import com.toybrokers.ludo.core.domain.entities.Player
 import com.toybrokers.ludo.core.domain.entities.PlayerPiece
 import com.toybrokers.ludo.core.domain.entities.Position
 import com.toybrokers.ludo.core.domain.entities.TurnStatus
-import com.toybrokers.ludo.core.domain.events.GameEventError
+import com.toybrokers.ludo.core.domain.events.GameEvent
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +24,7 @@ class GameStateTest {
             currentPlayer = Player.Red,
             players = setOf(Player.Red),
             turnStatus = TurnStatus.Move,
-            diceNumber = 3,
+            dice = Dice(diceNumber = 3),
             error = null
         )
 
@@ -52,14 +53,14 @@ class GameStateTest {
             currentPlayer = Player.Green,
             players = setOf(Player.Green),
             turnStatus = TurnStatus.Move,
-            diceNumber = 3,
+            dice = Dice(diceNumber = 3),
             error = null
         )
 
         val actual = gameState.apply(GameEvent.PieceMoved(playerPiece1))
 
         val expected = gameState.copy(
-            error = GameEventError.InvalidMove
+            error = GameError.InvalidMove
         )
 
         assertEquals(expected, actual)
@@ -78,7 +79,7 @@ class GameStateTest {
             currentPlayer = Player.Green,
             players = setOf(Player.Green, Player.Red),
             turnStatus = TurnStatus.Move,
-            diceNumber = 3,
+            dice = Dice(diceNumber = 3),
             error = null
         )
 
@@ -90,7 +91,7 @@ class GameStateTest {
                 Position.Home(opponentPiece) to opponentPiece,
             ),
             currentPlayer = Player.Red,
-            diceNumber = 3,
+            dice = Dice(diceNumber = 3),
             turnStatus = TurnStatus.Dice(remainingAttempts = 2)
         )
 

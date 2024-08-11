@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.toybrokers.ludo.core.domain.entities.GameEvent
+import com.toybrokers.ludo.core.domain.events.GameEvent
 import com.toybrokers.ludo.features.game.GameViewModel
 import com.toybrokers.ludo.features.game.views.gameBoardViews.GridView
 
@@ -75,12 +75,9 @@ fun GameView(viewModel: GameViewModel) {
                     )
 
                     AnimatedDice(
-                        diceNumber = gameState.value.diceNumber,
-                        onRollCompleted = {
-                            viewModel.addEvent(
-                                GameEvent.DiceRolled(
-                                diceNumber = it
-                            ))
+                        dice = gameState.value.dice,
+                        onTap = {
+                            viewModel.addEvent(GameEvent.DiceRolled(it))
                         },
                         modifier = Modifier.padding(8.dp)
                     )

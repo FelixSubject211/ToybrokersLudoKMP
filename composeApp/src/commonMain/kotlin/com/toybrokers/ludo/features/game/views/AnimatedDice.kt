@@ -1,5 +1,7 @@
 package com.toybrokers.ludo.features.game.views
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,32 +9,56 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
+import com.toybrokers.ludo.core.domain.entities.Dice
 
 @Composable
 fun AnimatedDice(
-    diceNumber: Int,
-    onRollCompleted: (Int) -> Unit,
+    dice: Dice,
+    onTap: (Dice) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var isRotating by remember { mutableStateOf(false) }
+    val rotation by animateFloatAsState(
+        targetValue = if (isRotating) 360f else 0f,
+        animationSpec = tween(durationMillis = 100),
+        finishedListener = {
+            isRotating = false
+        }
+    )
+
+    LaunchedEffect(dice.uuidForUIUpdates) {
+        isRotating = true
+    }
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .size(64.dp)
+            .rotate(rotation)
             .background(Color.Red, RoundedCornerShape(8.dp))
             .clickable {
-                val newNumber = (1..6).random()
-                onRollCompleted(newNumber)
+                if (!isRotating) { // Prevent multiple clicks during animation
+                    onTap(dice.rolled())
+                }
             }
     ) {
-        DrawDiceFace(diceNumber)
+        DrawDiceFace(dice.diceNumber)
     }
 }
+
+
 
 @Composable
 private fun DrawDiceFace(number: Int) {

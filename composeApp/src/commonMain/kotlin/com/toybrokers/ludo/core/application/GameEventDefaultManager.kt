@@ -1,7 +1,7 @@
 package com.toybrokers.ludo.core.application
 
-import com.toybrokers.ludo.core.domain.entities.GameEvent
 import com.toybrokers.ludo.core.domain.entities.GameState
+import com.toybrokers.ludo.core.domain.events.GameEvent
 import com.toybrokers.ludo.core.domain.interfaces.GameEventManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

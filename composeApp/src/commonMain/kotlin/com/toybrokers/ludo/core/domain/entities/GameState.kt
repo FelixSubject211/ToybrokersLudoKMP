@@ -1,14 +1,14 @@
 package com.toybrokers.ludo.core.domain.entities
 
-import com.toybrokers.ludo.core.domain.events.GameEventError
+import com.toybrokers.ludo.core.domain.events.GameEvent
 
 data class GameState(
     val positions: Map<Position, PlayerPiece>,
     val currentPlayer: Player,
     val players: Set<Player>,
     val turnStatus: TurnStatus,
-    val diceNumber: Int,
-    val error: GameEventError?
+    val dice: Dice,
+    val error: GameError?
 ) {
     fun apply(event: GameEvent): GameState {
         return when (event) {
@@ -19,23 +19,23 @@ data class GameState(
 
     private fun pieceMoved(event: GameEvent.PieceMoved): GameState {
         if (turnStatus is TurnStatus.Dice) {
-            return copy(error = GameEventError.MustRollDice)
+            return copy(error = GameError.MustRollDice)
         }
 
         if (event.piece.owner != currentPlayer) {
-            return copy(error = GameEventError.NotPlayersTurn)
+            return copy(error = GameError.NotPlayersTurn)
         }
 
         if (!possibleMoves().contains(event.piece)) {
-            return copy(error = GameEventError.InvalidMove)
+            return copy(error = GameError.InvalidMove)
         }
 
         val oldPosition = positions.filterValues { it == event.piece }.keys.first()
 
         val newPosition = when (oldPosition) {
             is Position.Home -> event.piece.owner.start()
-            is Position.Track -> oldPosition.increment(diceNumber, event.piece.owner)
-            is Position.End -> oldPosition.increment(diceNumber)
+            is Position.Track -> oldPosition.increment(dice.diceNumber, event.piece.owner)
+            is Position.End -> oldPosition.increment(dice.diceNumber)
         }
 
         val opponentPiece = positions[newPosition]
@@ -55,17 +55,17 @@ data class GameState(
 
         return copy(
             positions = newPositions,
-            currentPlayer = if (diceNumber == 6) currentPlayer else nextPlayer(),
+            currentPlayer = if (dice.diceNumberIsMax) currentPlayer else nextPlayer(),
             turnStatus = TurnStatus.Dice(remainingAttempts = 2)
         )
     }
 
     private fun diceRolled(event: GameEvent.DiceRolled): GameState {
         if (turnStatus == TurnStatus.Move) {
-            return this.copy(error = GameEventError.MustMovePiece)
+            return this.copy(error = GameError.MustMovePiece)
         }
 
-        val updatedState = this.copy(diceNumber = event.diceNumber)
+        val updatedState = this.copy(dice = event.dice)
         val hasNoPossibleMoves = updatedState.possibleMoves().isEmpty()
 
         return when {
@@ -106,10 +106,10 @@ data class GameState(
     private fun hasValidTarget(position: Position, playerPiece: PlayerPiece): Boolean {
         return when(position) {
             is Position.Home -> {
-                diceNumber == 6 && positions[playerPiece.owner.start()]?.owner != currentPlayer
+                dice.diceNumberIsMax && positions[playerPiece.owner.start()]?.owner != currentPlayer
             }
             is Position.Track -> {
-                val incrementedPosition = position.increment(diceNumber, playerPiece.owner)
+                val incrementedPosition = position.increment(dice.diceNumber, playerPiece.owner)
                 return if (incrementedPosition == null) {
                     false
                 } else {
@@ -117,7 +117,7 @@ data class GameState(
                 }
             }
             is Position.End -> {
-                val incrementedPosition = position.increment(diceNumber)
+                val incrementedPosition = position.increment(dice.diceNumber)
                 return if (incrementedPosition == null) {
                     false
                 } else {
@@ -140,7 +140,7 @@ data class GameState(
                 currentPlayer = players.random(),
                 players = players,
                 turnStatus = TurnStatus.Dice(remainingAttempts = 2),
-                diceNumber = 1,
+                dice = Dice(diceNumber = 1),
                 error = null
             )
         }

@@ -1,5 +1,6 @@
 package com.toybrokers.ludo.core.domain.handlers
 
+import com.toybrokers.ludo.BuildKonfig
 import com.toybrokers.ludo.core.domain.entities.GameError
 import com.toybrokers.ludo.core.domain.entities.GameState
 import com.toybrokers.ludo.core.domain.entities.Position
@@ -58,7 +59,7 @@ class DefaultPieceMovedHandler(
             } else {
                 nextPlayerCalculator.nextPlayer(gameState.currentPlayer, gameState.players)
             },
-            turnStatus = TurnStatus.Dice(remainingAttempts = 2)
+            turnStatus = TurnStatus.Dice(remainingAttempts = BuildKonfig.remainingAttempts)
         )
     }
 }

@@ -3,12 +3,14 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
@@ -124,6 +126,44 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.toybrokers.ludo"
             packageVersion = "1.0.0"
+        }
+    }
+}
+
+buildkonfig {
+    packageName = "com.toybrokers.ludo"
+
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.INT, "maxDiceNumber", 6.toString())
+        buildConfigField(FieldSpec.Type.INT, "trackMaxNumber", 39.toString())
+        buildConfigField(FieldSpec.Type.INT, "endMaxNumber", 3.toString())
+        buildConfigField(FieldSpec.Type.INT, "remainingAttempts", 2.toString())
+
+        buildConfigField(FieldSpec.Type.INT, "redStart", 0.toString())
+        buildConfigField(FieldSpec.Type.INT, "redLastIndexBeforeEnd", 39.toString())
+
+        buildConfigField(FieldSpec.Type.INT, "blueStart", 10.toString())
+        buildConfigField(FieldSpec.Type.INT, "blueLastIndexBeforeEnd", 9.toString())
+
+        buildConfigField(FieldSpec.Type.INT, "greenStart", 20.toString())
+        buildConfigField(FieldSpec.Type.INT, "greenLastIndexBeforeEnd", 19.toString())
+
+        buildConfigField(FieldSpec.Type.INT, "yellowStart", 30.toString())
+        buildConfigField(FieldSpec.Type.INT, "yellowLastIndexBeforeEnd", 29.toString())
+    }
+
+    targetConfigs {
+        create("jvm") {
+            buildConfigField(FieldSpec.Type.STRING, "target", "jvm")
+        }
+        create("ios") {
+            buildConfigField(FieldSpec.Type.STRING, "target", "ios")
+        }
+        create("desktop") {
+            buildConfigField(FieldSpec.Type.STRING, "desktopvalue", "desktop")
+        }
+        create("jsCommon") {
+            buildConfigField(FieldSpec.Type.STRING, "target", "jsCommon")
         }
     }
 }

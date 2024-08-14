@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -47,7 +46,11 @@ fun GameView(viewModel: GameViewModel) {
                         expanded = menuExpanded.value,
                         onDismissRequest = { viewModel.onDismissMenu() }
                     ) {
-                        DropdownMenuItem(onClick = { viewModel.onEndGame() }) {
+                        DropdownMenuItem(onClick = viewModel::undo) {
+                            Text("Undo")
+                        }
+
+                        DropdownMenuItem(onClick = viewModel::onEndGame) {
                             Text("Leave Game")
                         }
                     }
@@ -82,13 +85,6 @@ fun GameView(viewModel: GameViewModel) {
                         },
                         modifier = Modifier.padding(8.dp)
                     )
-                }
-
-                Button(
-                    onClick = viewModel::undo,
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                   Text("Undo")
                 }
 
                 CustomSnackbar(gameState)

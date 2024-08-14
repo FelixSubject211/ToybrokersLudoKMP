@@ -1,25 +1,26 @@
 package com.toybrokers.ludo.core.domain.entities
 
+import com.toybrokers.ludo.BuildKonfig
+
 
 data class Dice(
     val diceNumber: Int,
-    val maxNumber: Int = 6,
     val uuidForUIUpdates: UUID = UUID.randomUUID()
 ) {
     init {
-        require(diceNumber in 1..maxNumber) {
-            "DiceNumber index must be between 1 and $maxNumber"
+        require(diceNumber in 1..BuildKonfig.maxDiceNumber) {
+            "DiceNumber index must be between 1 and $BuildKonfig.maxDiceNumber"
         }
     }
 
     fun rolled(): Dice {
         return this.copy(
-            diceNumber = (1..maxNumber).random(),
+            diceNumber = (1..BuildKonfig.maxDiceNumber).random(),
             uuidForUIUpdates = UUID.randomUUID()
         )
     }
 
-    val diceNumberIsMax: Boolean = diceNumber == maxNumber
+    val diceNumberIsMax: Boolean = diceNumber == BuildKonfig.maxDiceNumber
 
     /**
      * Note: The UUID field is generally used for UI purposes
@@ -33,14 +34,13 @@ data class Dice(
         if (other !is Dice) return false
 
         if (diceNumber != other.diceNumber) return false
-        if (maxNumber != other.maxNumber) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = diceNumber
-        result = 31 * result + maxNumber
+        result = 31 * result + BuildKonfig.maxDiceNumber
         return result
     }
 }

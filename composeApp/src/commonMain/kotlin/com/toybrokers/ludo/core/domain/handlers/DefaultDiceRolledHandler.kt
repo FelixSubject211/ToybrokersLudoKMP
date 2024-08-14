@@ -1,5 +1,6 @@
 package com.toybrokers.ludo.core.domain.handlers
 
+import com.toybrokers.ludo.BuildKonfig
 import com.toybrokers.ludo.core.domain.entities.GameError
 import com.toybrokers.ludo.core.domain.entities.GameState
 import com.toybrokers.ludo.core.domain.entities.TurnStatus
@@ -40,7 +41,7 @@ class DefaultDiceRolledHandler(
                         currentPlayer = gameState.currentPlayer,
                         players = gameState.players
                     ),
-                    turnStatus = TurnStatus.Dice(remainingAttempts = 2),
+                    turnStatus = TurnStatus.Dice(remainingAttempts = BuildKonfig.remainingAttempts),
                     error = null
                 )
             }

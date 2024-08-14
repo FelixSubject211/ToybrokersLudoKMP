@@ -22,10 +22,6 @@ class GameViewModel(
         turnGatekeeper.addEvent(event)
     }
 
-    fun undo() {
-        turnGatekeeper.undo()
-    }
-
     fun toggleMenu() {
         _menuExpanded.value = !_menuExpanded.value
     }
@@ -34,7 +30,13 @@ class GameViewModel(
         _menuExpanded.value = false
     }
 
+    fun undo() {
+        turnGatekeeper.undo()
+        onDismissMenu()
+    }
+
     fun onEndGame() {
         navigator.goBack()
+        onDismissMenu()
     }
 }

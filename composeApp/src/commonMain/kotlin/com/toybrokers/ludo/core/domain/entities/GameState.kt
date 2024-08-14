@@ -9,12 +9,6 @@ data class GameState(
     val dice: Dice,
     val error: GameError?
 ) {
-    /*
-    private fun pieceMoved(event: GameEvent.PieceMoved): GameState {
-
-    }
-     */
-
     companion object {
         fun initialState(players: Set<Player>): GameState {
             val positions: Map<Position, PlayerPiece> = players

@@ -18,6 +18,7 @@ junit = "4.13.2"
 koinCore = "3.6.0-wasm-alpha2"
 kotlin = "2.0.0"
 kotlinx-coroutines = "1.8.1"
+mokkery = "2.1.1"
 
 [libraries]
 animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "animation" }
@@ -43,3 +44,4 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }

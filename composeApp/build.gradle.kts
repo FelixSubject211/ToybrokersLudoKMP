@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {

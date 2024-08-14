@@ -52,14 +52,21 @@ class DefaultPieceMovedHandler(
             }
             .toMap()
 
-        return gameState.copy(
-            positions = newPositions,
-            currentPlayer = if (gameState.dice.diceNumberIsMax) {
-                gameState.currentPlayer
-            } else {
-                nextPlayerCalculator.nextPlayer(gameState.currentPlayer, gameState.players)
-            },
-            turnStatus = TurnStatus.Dice(remainingAttempts = BuildKonfig.remainingAttempts)
-        )
+        return when(val nextPlayerResult = nextPlayerCalculator.nextPlayer(gameState)) {
+            NextPlayerCalculator.Result.GameIsFinish -> {
+                gameState
+            }
+            is NextPlayerCalculator.Result.NextPlayer -> {
+                gameState.copy(
+                    positions = newPositions,
+                    currentPlayer = if (gameState.dice.diceNumberIsMax) {
+                        gameState.currentPlayer
+                    } else {
+                        nextPlayerResult.player
+                    },
+                    turnStatus = TurnStatus.Dice(remainingAttempts = BuildKonfig.remainingAttempts)
+                )
+            }
+        }
     }
 }

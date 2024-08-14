@@ -49,7 +49,7 @@ fun AnimatedDice(
             .rotate(rotation)
             .background(Color.Red, RoundedCornerShape(8.dp))
             .clickable {
-                if (!isRotating) { // Prevent multiple clicks during animation
+                if (!isRotating) {
                     onTap(dice.rolled())
                 }
             }

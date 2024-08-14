@@ -1,16 +1,19 @@
 package com.toybrokers.ludo.features.startmenu
 
 import com.toybrokers.ludo.Navigator
+import com.toybrokers.ludo.core.application.DefaultOpponent
 import com.toybrokers.ludo.core.application.GameEventDefaultManager
-import com.toybrokers.ludo.core.application.Opponent
 import com.toybrokers.ludo.core.application.TurnDefaultGatekeeper
 import com.toybrokers.ludo.core.domain.entities.GameState
 import com.toybrokers.ludo.core.domain.entities.Player
+import com.toybrokers.ludo.core.domain.interfaces.Opponent
 import com.toybrokers.ludo.features.game.GameViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class StartMenuViewModel {
+class StartMenuViewModel(
+    private val navigator: Navigator
+) {
     sealed class PlayerState {
         data object Inactive : PlayerState()
         data object ControlledByComputer : PlayerState()
@@ -26,11 +29,9 @@ class StartMenuViewModel {
         )
     )
 
-    val playersState = _playersState.asStateFlow()
+    private val activeOpponents = mutableListOf<Opponent>()
 
-    fun playerStateIsValid(): Boolean {
-        return playersState.value.any { it.value != PlayerState.Inactive }
-    }
+    val playersState = _playersState.asStateFlow()
 
     fun editPlayerState(player: Player, playerState: PlayerState) {
         _playersState.tryEmit(
@@ -42,7 +43,9 @@ class StartMenuViewModel {
         )
     }
 
-    private val activeOpponents = mutableListOf<Opponent>()
+    fun playerStateIsValid(): Boolean {
+        return playersState.value.any { it.value != PlayerState.Inactive }
+    }
 
     fun startGame() {
         stopAllOpponents()
@@ -64,17 +67,18 @@ class StartMenuViewModel {
 
         val turnGatekeeper = TurnDefaultGatekeeper(
             players = controlledByHuman,
+            canUndo = true,
             gameEventManager = gameEventManager
         )
 
-        Navigator.defaultNavigator.navigateTo(
+        navigator.navigateTo(
             Navigator.Screen.GameBoard(
                 viewModel = GameViewModel(turnGatekeeper)
             )
         )
 
         controlledByComputer.forEach {
-            Opponent(
+            DefaultOpponent(
                 player = it,
                 gameEventManager = gameEventManager
             ).start()

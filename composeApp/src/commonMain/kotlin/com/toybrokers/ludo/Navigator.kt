@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface Navigator {
-    val currentScreen: StateFlow<Screen>
+    val currentScreen: StateFlow<Screen?>
 
     fun navigateTo(screen: Screen)
     fun goBack()
@@ -15,22 +15,16 @@ interface Navigator {
         data class StartMenu(val viewModel: StartMenuViewModel) : Screen()
         data class GameBoard(val viewModel: GameViewModel) : Screen()
     }
-
-    companion object {
-        val defaultNavigator = DefaultNavigator(
-            initialScreen = Screen.StartMenu(StartMenuViewModel())
-        )
-    }
 }
 
-class DefaultNavigator(initialScreen: Navigator.Screen): Navigator {
-    private val _currentScreen = MutableStateFlow(initialScreen)
-    override val currentScreen: StateFlow<Navigator.Screen> get() = _currentScreen
+class DefaultNavigator(): Navigator {
+    private val _currentScreen = MutableStateFlow<Navigator.Screen?>(null)
+    override val currentScreen: StateFlow<Navigator.Screen?> get() = _currentScreen
 
     private val screenStack = mutableListOf<Navigator.Screen>()
 
     override fun navigateTo(screen: Navigator.Screen) {
-        screenStack.add(_currentScreen.value)
+        _currentScreen.value?.let { screenStack.add(it) }
         _currentScreen.value = screen
     }
 

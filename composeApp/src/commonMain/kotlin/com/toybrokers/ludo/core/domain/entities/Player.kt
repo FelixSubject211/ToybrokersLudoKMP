@@ -6,15 +6,6 @@ sealed class Player {
     data object Green : Player()
     data object Yellow : Player()
 
-    fun next(): Player {
-        return when(this) {
-            is Blue -> Green
-            is Green -> Yellow
-            is Yellow -> Red
-            is Red -> Blue
-        }
-    }
-
     fun start(): Position {
         return when(this) {
             is Red -> Position.Track(0)

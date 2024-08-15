@@ -14,7 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.toybrokers.ludo.core.domain.entities.GameState
+import com.toybrokers.ludo.domain.entities.GameState
 import kotlinx.coroutines.launch
 
 @Composable

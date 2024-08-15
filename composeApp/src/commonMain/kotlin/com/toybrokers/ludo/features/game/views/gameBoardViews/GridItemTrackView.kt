@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.toybrokers.ludo.core.domain.entities.Player
-import com.toybrokers.ludo.core.domain.entities.PlayerPiece
+import com.toybrokers.ludo.domain.entities.Player
+import com.toybrokers.ludo.domain.entities.PlayerPiece
 
 @Composable
 fun GridItemTrackView(
@@ -22,20 +22,20 @@ fun GridItemTrackView(
         is PlayerPiece.Second -> "2"
         is PlayerPiece.Third -> "3"
         is PlayerPiece.Fourth -> "4"
-        null -> ""
+        else -> ""
     }
     val color = when(gridItem.playerPiece?.owner) {
         Player.Blue -> Color.Blue
         Player.Green -> Color.Green
         Player.Red -> Color.Red
         Player.Yellow -> Color.Yellow
-        null -> {
+        else -> {
             when(gridItem.startOwner) {
                 Player.Blue -> Color.Blue.copy(alpha = 0.5f)
                 Player.Green -> Color.Green.copy(alpha = 0.5f)
                 Player.Red -> Color.Red.copy(alpha = 0.5f)
                 Player.Yellow -> Color.Yellow.copy(alpha = 0.5f)
-                null -> Color.Gray
+                else -> Color.Gray
             }
         }
     }

@@ -1,9 +1,10 @@
 package com.toybrokers.ludo.features.game.views.gameBoardViews
 
-import com.toybrokers.ludo.core.domain.entities.GameState
-import com.toybrokers.ludo.core.domain.entities.Player
-import com.toybrokers.ludo.core.domain.entities.PlayerPiece
-import com.toybrokers.ludo.core.domain.entities.Position
+import com.toybrokers.ludo.domain.entities.GameState
+import com.toybrokers.ludo.domain.entities.Player
+import com.toybrokers.ludo.domain.entities.PlayerPiece
+import com.toybrokers.ludo.domain.entities.Position
+
 
 fun generateBoard(gameState: GameState): List<List<GridItem>>{
     return listOf(

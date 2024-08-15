@@ -1,15 +1,17 @@
 package com.toybrokers.ludo.features.startmenu
 
 import com.toybrokers.ludo.Navigator
-import com.toybrokers.ludo.core.application.DefaultOpponent
-import com.toybrokers.ludo.core.application.GameEventDefaultManager
-import com.toybrokers.ludo.core.application.TurnDefaultGatekeeper
-import com.toybrokers.ludo.core.domain.entities.GameState
-import com.toybrokers.ludo.core.domain.entities.Player
-import com.toybrokers.ludo.core.domain.interfaces.Opponent
+import com.toybrokers.ludo.application.DefaultOpponent
+import com.toybrokers.ludo.application.GameEventDefaultManager
+import com.toybrokers.ludo.application.TurnDefaultGatekeeper
+import com.toybrokers.ludo.di.Koin
+import com.toybrokers.ludo.domain.entities.GameState
+import com.toybrokers.ludo.domain.entities.Player
+import com.toybrokers.ludo.domain.interfaces.Opponent
 import com.toybrokers.ludo.features.game.GameViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.component.get
 
 class StartMenuViewModel(
     private val navigator: Navigator
@@ -63,7 +65,11 @@ class StartMenuViewModel(
             .keys
 
         val gameState = GameState.initialState(allPlayers)
-        val gameEventManager = GameEventDefaultManager(gameState)
+        val gameEventManager = GameEventDefaultManager(
+            initialState = gameState,
+            diceRolledHandler = Koin.get(),
+            pieceMovedHandler = Koin.get()
+        )
 
         val turnGatekeeper = TurnDefaultGatekeeper(
             players = controlledByHuman,
@@ -80,7 +86,8 @@ class StartMenuViewModel(
         controlledByComputer.forEach {
             DefaultOpponent(
                 player = it,
-                gameEventManager = gameEventManager
+                gameEventManager = gameEventManager,
+                moveCalculator = Koin.get()
             ).start()
         }
     }

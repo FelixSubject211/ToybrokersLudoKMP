@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.toybrokers.ludo.core.domain.entities.GameState
-import com.toybrokers.ludo.core.domain.entities.PlayerPiece
+import com.toybrokers.ludo.domain.entities.GameState
+import com.toybrokers.ludo.domain.entities.PlayerPiece
 
 @Composable
 fun GridView(

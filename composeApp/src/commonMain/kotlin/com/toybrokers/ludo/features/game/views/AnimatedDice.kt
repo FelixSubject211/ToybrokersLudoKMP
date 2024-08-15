@@ -21,7 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
-import com.toybrokers.ludo.core.domain.entities.Dice
+import com.toybrokers.ludo.domain.entities.Dice
 
 @Composable
 fun AnimatedDice(

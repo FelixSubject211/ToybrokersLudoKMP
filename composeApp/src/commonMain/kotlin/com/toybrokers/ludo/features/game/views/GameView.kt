@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.toybrokers.ludo.core.domain.events.GameEvent
+import com.toybrokers.ludo.domain.events.GameEvent
 import com.toybrokers.ludo.features.game.GameViewModel
 import com.toybrokers.ludo.features.game.views.gameBoardViews.GridView
 

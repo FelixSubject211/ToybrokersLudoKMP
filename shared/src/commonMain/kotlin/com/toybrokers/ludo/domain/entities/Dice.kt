@@ -1,11 +1,12 @@
 package com.toybrokers.ludo.domain.entities
 
 import com.toybrokers.ludo.BuildKonfig
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class Dice(
     val diceNumber: Int,
-    val uuidForUIUpdates: UUID = UUID.randomUUID()
+    val uuidForUIUpdates: String = UUID.randomUUID().toString()
 ) {
     init {
         require(diceNumber in 1..BuildKonfig.maxDiceNumber) {
@@ -16,7 +17,7 @@ data class Dice(
     fun rolled(): Dice {
         return this.copy(
             diceNumber = (1..BuildKonfig.maxDiceNumber).random(),
-            uuidForUIUpdates = UUID.randomUUID()
+            uuidForUIUpdates = UUID.randomUUID().toString()
         )
     }
 

@@ -1,6 +1,7 @@
 package com.toybrokers.ludo
 
 import com.toybrokers.ludo.features.game.GameViewModel
+import com.toybrokers.ludo.features.manageOpenOnlineGames.ManageOpenOnlineGamesViewModel
 import com.toybrokers.ludo.features.startmenu.StartMenuViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ interface Navigator {
     sealed class Screen {
         data class StartMenu(val viewModel: StartMenuViewModel) : Screen()
         data class GameBoard(val viewModel: GameViewModel) : Screen()
+        data class ManageOpenOnlineGames(val viewModel: ManageOpenOnlineGamesViewModel): Screen()
     }
 }
 

@@ -1,11 +1,17 @@
 package com.toybrokers.ludo.domain.entities
 
 import com.toybrokers.ludo.BuildKonfig
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class Player {
+    @Serializable
     data object Red : Player()
+    @Serializable
     data object Blue : Player()
+    @Serializable
     data object Green : Player()
+    @Serializable
     data object Yellow : Player()
 
     fun start(): Position {

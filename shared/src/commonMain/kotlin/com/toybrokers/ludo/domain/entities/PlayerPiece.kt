@@ -1,9 +1,16 @@
 package com.toybrokers.ludo.domain.entities
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 sealed class PlayerPiece(val owner: Player) {
+    @Serializable
     data class First(val pieceOwner: Player) : PlayerPiece(pieceOwner)
+    @Serializable
     data class Second(val pieceOwner: Player) : PlayerPiece(pieceOwner)
+    @Serializable
     data class Third(val pieceOwner: Player) : PlayerPiece(pieceOwner)
+    @Serializable
     data class Fourth(val pieceOwner: Player) : PlayerPiece(pieceOwner)
 
     fun home(): Position.Home {

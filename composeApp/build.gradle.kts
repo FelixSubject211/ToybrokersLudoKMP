@@ -1,73 +1,62 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.buildkonfig)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinx.rpc.platform)
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        moduleName = "composeApp"
-        browser {
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(projectDirPath)
-                    }
-                }
-            }
-        }
-        binaries.executable()
-    }
-    
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     jvm("desktop")
-    
+
     listOf(
-        iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
+        iosX64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
         }
     }
-    
+
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.runtime)
+            implementation(compose.ui)
             implementation(libs.animation)
-            implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.koin.core)
+            implementation(libs.kotlinx.rpc.krpc.client)
+            implementation(libs.kotlinx.rpc.krpc.ktor.client)
+            implementation(libs.kotlinx.rpc.krpc.serialization.json)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.websockets)
             implementation(projects.shared)
         }
         desktopMain.dependencies {
@@ -78,8 +67,8 @@ kotlin {
 }
 
 android {
-    namespace = "com.toybrokers.ludo"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    namespace = "com.toybrokers.ludo"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -113,11 +102,35 @@ android {
         debugImplementation(compose.uiTooling)
     }
 }
+
 dependencies {
     implementation(project(":shared"))
-    implementation(project(":shared"))
-    implementation(project(":shared"))
-    implementation(project(":shared"))
+}
+
+buildkonfig {
+    packageName = "com.toybrokers.ludo.main"
+
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.INT, "port", 8081.toString())
+    }
+
+    targetConfigs {
+        create("android") {
+            buildConfigField(FieldSpec.Type.STRING, "Host", "10.0.2.2")
+        }
+        create("desktop") {
+            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+        }
+        create("iosArm64") {
+            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+        }
+        create("iosSimulatorArm64") {
+            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+        }
+        create("iosX64") {
+            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+        }
+    }
 }
 
 compose.desktop {
@@ -125,11 +138,9 @@ compose.desktop {
         mainClass = "com.toybrokers.ludo.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.toybrokers.ludo"
             packageVersion = "1.0.0"
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
         }
     }
 }
-
-

@@ -1,6 +1,8 @@
 package com.toybrokers.ludo.domain.entities
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GameState(
     val positions: Map<Position, PlayerPiece>,
     val currentPlayer: Player,

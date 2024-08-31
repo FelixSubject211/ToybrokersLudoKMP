@@ -1,9 +1,15 @@
 package com.toybrokers.ludo.domain.entities
 
 import com.toybrokers.ludo.BuildKonfig
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 sealed class Position {
+    @Serializable
     data class Home(val playerPiece: PlayerPiece) : Position()
+
+    @Serializable
     data class Track(val value: Int): Position() {
         init {
             require(value in 0..BuildKonfig.trackMaxNumber) {
@@ -26,6 +32,8 @@ sealed class Position {
             }
         }
     }
+
+    @Serializable
     data class End(val player: Player, val value: Int): Position() {
         init {
             require(value in 0..BuildKonfig.endMaxNumber) {

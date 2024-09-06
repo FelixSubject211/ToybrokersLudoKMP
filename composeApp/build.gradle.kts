@@ -50,7 +50,6 @@ kotlin {
             implementation(libs.animation)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.koin.core)
             implementation(libs.kotlinx.rpc.krpc.client)
             implementation(libs.kotlinx.rpc.krpc.ktor.client)
             implementation(libs.kotlinx.rpc.krpc.serialization.json)

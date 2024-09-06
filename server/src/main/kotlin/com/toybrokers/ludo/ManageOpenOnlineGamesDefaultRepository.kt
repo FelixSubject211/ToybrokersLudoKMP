@@ -17,7 +17,7 @@ class ManageOpenOnlineGamesDefaultRepository(
         return pendingGames.map { games ->
             games.values.firstOrNull { game ->
                 game.players.any { it.first == clientId } &&
-                        game.players.size >= 4
+                        game.players.size >= 2
             }?.let {
                 manageOngoingOnlineGamesRepository.addGame(
                     gameId = it.gameId,

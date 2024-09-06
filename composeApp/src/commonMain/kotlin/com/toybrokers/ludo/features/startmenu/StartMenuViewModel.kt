@@ -4,14 +4,16 @@ import com.toybrokers.ludo.Navigator
 import com.toybrokers.ludo.application.DefaultOpponent
 import com.toybrokers.ludo.application.GameEventDefaultManager
 import com.toybrokers.ludo.application.TurnDefaultGatekeeper
-import com.toybrokers.ludo.di.Koin
 import com.toybrokers.ludo.domain.entities.GameState
 import com.toybrokers.ludo.domain.entities.Player
+import com.toybrokers.ludo.domain.handlers.DefaultDiceRolledHandler
+import com.toybrokers.ludo.domain.handlers.DefaultMoveCalculator
+import com.toybrokers.ludo.domain.handlers.DefaultNextPlayerCalculator
+import com.toybrokers.ludo.domain.handlers.DefaultPieceMovedHandler
 import com.toybrokers.ludo.domain.interfaces.Opponent
 import com.toybrokers.ludo.features.game.GameViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.koin.core.component.get
 
 class StartMenuViewModel(
     private val navigator: Navigator
@@ -67,8 +69,14 @@ class StartMenuViewModel(
         val gameState = GameState.initialState(allPlayers)
         val gameEventManager = GameEventDefaultManager(
             initialState = gameState,
-            diceRolledHandler = Koin.get(),
-            pieceMovedHandler = Koin.get()
+            diceRolledHandler = DefaultDiceRolledHandler(
+                moveCalculator = DefaultMoveCalculator(),
+                nextPlayerCalculator = DefaultNextPlayerCalculator()
+            ),
+            pieceMovedHandler = DefaultPieceMovedHandler(
+                moveCalculator = DefaultMoveCalculator(),
+                nextPlayerCalculator = DefaultNextPlayerCalculator()
+            )
         )
 
         val turnGatekeeper = TurnDefaultGatekeeper(
@@ -79,7 +87,7 @@ class StartMenuViewModel(
 
         navigator.navigateTo(
             Navigator.Screen.GameBoard(
-                viewModel = GameViewModel(turnGatekeeper)
+                viewModel = GameViewModel(turnGatekeeper, navigator)
             )
         )
 
@@ -87,7 +95,7 @@ class StartMenuViewModel(
             DefaultOpponent(
                 player = it,
                 gameEventManager = gameEventManager,
-                moveCalculator = Koin.get()
+                moveCalculator = DefaultMoveCalculator()
             ).start()
         }
     }

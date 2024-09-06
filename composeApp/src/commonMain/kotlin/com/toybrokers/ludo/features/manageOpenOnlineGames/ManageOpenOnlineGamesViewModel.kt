@@ -175,16 +175,10 @@ class ManageOpenOnlineGamesViewModel(
 
                                             return stateFlow
                                         }
-                                    })
+                                    },
+                                    navigator = navigator
+                                    )
                                 ))
-
-                                coroutineScope.launch {
-                                    streamScoped {
-                                        ongoingGamesService.currentState(clientId, it.gameId).collect { a ->
-                                            println(a)
-                                        }
-                                    }
-                                }
                             }
                         }
                     }

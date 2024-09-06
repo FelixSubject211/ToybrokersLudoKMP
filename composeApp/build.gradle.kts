@@ -115,19 +115,19 @@ buildkonfig {
 
     targetConfigs {
         create("android") {
-            buildConfigField(FieldSpec.Type.STRING, "Host", "10.0.2.2")
+            buildConfigField(FieldSpec.Type.STRING, "host", "10.0.2.2")
         }
         create("desktop") {
-            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+            buildConfigField(FieldSpec.Type.STRING, "host", "127.0.0.1")
         }
         create("iosArm64") {
-            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+            buildConfigField(FieldSpec.Type.STRING, "host", "127.0.0.1")
         }
         create("iosSimulatorArm64") {
-            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+            buildConfigField(FieldSpec.Type.STRING, "host", "127.0.0.1")
         }
         create("iosX64") {
-            buildConfigField(FieldSpec.Type.STRING, "Host", "127.0.0.1")
+            buildConfigField(FieldSpec.Type.STRING, "host", "127.0.0.1")
         }
     }
 }

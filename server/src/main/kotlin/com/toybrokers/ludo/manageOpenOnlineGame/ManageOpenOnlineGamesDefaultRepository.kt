@@ -1,7 +1,8 @@
-package com.toybrokers.ludo
+package com.toybrokers.ludo.manageOpenOnlineGame
 
 import com.toybrokers.ludo.domain.entities.Player
 import com.toybrokers.ludo.domain.entities.UUID
+import com.toybrokers.ludo.manageOngoingOnlineGame.ManageOngoingOnlineGamesRepository
 import com.toybrokers.ludo.network.manageOpenOnlineGamesService.ManageOpenOnlineGamesServiceJoinGameResult
 import com.toybrokers.ludo.network.manageOpenOnlineGamesService.ManageOpenOnlineGamesServiceResponse
 import kotlinx.coroutines.flow.Flow
@@ -63,7 +64,8 @@ class ManageOpenOnlineGamesDefaultRepository(
         pendingGames.emit(pendingGames.value.plus(gameId to PendingGame(
             gameId = gameId,
             players = game.players.plus(clientId to player)
-        )))
+        )
+        ))
         return ManageOpenOnlineGamesServiceJoinGameResult.Success
     }
 

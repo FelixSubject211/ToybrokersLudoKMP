@@ -1,5 +1,9 @@
 package com.toybrokers.ludo
 
+import com.toybrokers.ludo.manageOngoingOnlineGame.ManageOngoingOnlineGamesDefaultRepository
+import com.toybrokers.ludo.manageOngoingOnlineGame.ManageOngoingOnlineGamesDefaultService
+import com.toybrokers.ludo.manageOpenOnlineGame.ManageOpenOnlineGamesDefaultRepository
+import com.toybrokers.ludo.manageOpenOnlineGame.ManageOpenOnlineGamesDefaultService
 import com.toybrokers.ludo.network.manageOngoingOnlineGamesService.ManageOngoingOnlineGamesService
 import com.toybrokers.ludo.network.manageOpenOnlineGamesService.ManageOpenOnlineGamesService
 import io.ktor.server.application.install

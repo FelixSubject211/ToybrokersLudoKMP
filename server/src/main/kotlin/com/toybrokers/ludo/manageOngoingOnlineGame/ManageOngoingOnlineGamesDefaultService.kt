@@ -1,4 +1,4 @@
-package com.toybrokers.ludo
+package com.toybrokers.ludo.manageOngoingOnlineGame
 
 import com.toybrokers.ludo.domain.entities.GameState
 import com.toybrokers.ludo.domain.events.GameEvent

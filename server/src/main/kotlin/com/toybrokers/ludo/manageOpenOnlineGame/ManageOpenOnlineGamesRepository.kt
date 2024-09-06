@@ -1,4 +1,4 @@
-package com.toybrokers.ludo
+package com.toybrokers.ludo.manageOpenOnlineGame
 
 import com.toybrokers.ludo.domain.entities.Player
 import com.toybrokers.ludo.network.manageOpenOnlineGamesService.ManageOpenOnlineGamesServiceJoinGameResult

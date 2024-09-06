@@ -1,4 +1,4 @@
-package com.toybrokers.ludo
+package com.toybrokers.ludo.manageOngoingOnlineGame
 
 import com.toybrokers.ludo.application.GameEventDefaultManager
 import com.toybrokers.ludo.application.TurnDefaultGatekeeper
